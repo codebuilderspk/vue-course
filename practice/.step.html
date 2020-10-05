@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style and classes in Vue</title>
+    <style>
+        *{
+            margin: 0;
+        }
+        section article{
+            height: 150px;
+        }
+        article:nth-child(odd){
+            background-color: aqua;
+        }
+        section{
+            display: none;
+        }
+        section.active{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <section @click.capture.stop="changeStep" class="active">
+            <article :style="{backgroundColor: firstChild === '' ? '#f4f4f4' : '' }" @click="firstChild === '' ? firstChild='#f4f4f4' : firstChild=''"></article>
+            <article></article>
+            <article></article>
+            <article></article>
+        </section>
+        <section @click.capture.stop="changeStep" class="">
+            <article :style="{backgroundColor: firstChild === '' ? '#f4f4f4' : '' }" @click="firstChild === '' ? firstChild='#f4f4f4' : firstChild=''"></article>
+            <article style="background-color:darkgoldenrod "></article>
+            <article ></article>
+            <article></article>
+        </section>
+        <section @click.capture.stop="changeStep" class="">
+            <article :style="{backgroundColor: firstChild === '' ? '#f4f4f4' : '' }" @click="firstChild === '' ? firstChild='#f4f4f4' : firstChild=''"></article>
+            <article></article>
+            <article style="background-color: black;"></article>
+            <article></article>
+        </section>
+        <section @click.capture.stop="changeStep" class="">
+            <article :style="{backgroundColor: firstChild === '' ? '#f4f4f4' : '' }" @click="firstChild === '' ? firstChild='#f4f4f4' : firstChild=''"></article>
+            <article></article>
+            <article style="background-color: blueviolet;"></article>
+            <article></article>
+        </section>
+    </div>
+
+    <script src="//unpkg.com/vue@next"></script>
+    <script>
+        const app = Vue.createApp({
+            data(){
+                return{
+                    firstChild:''
+                };
+            },
+            methods:{
+                changeStep(event){
+                    if(event.currentTarget.closest('div').contains(event.currentTarget.nextElementSibling))
+                    {
+                        event.currentTarget.classList.remove('active')
+                        event.currentTarget.nextElementSibling.classList.add('active')
+                    }else{
+                        alert('Thanks for submission! we will reach out soon.')
+                        event.currentTarget.classList.remove('active')
+
+                    }
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+</html>

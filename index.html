@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue!</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        .d-flex{
+            display: flex;
+            justify-content: center;
+        }
+        .profile{
+            display: flex;
+            flex-direction: column;
+        }
+        .profile p{
+            padding: 1em;
+            border: 1px solid #333333;
+        }
+        .darkMode{
+            background-color: #333333;
+            color: #ffffff;
+        }
+        .darkMode p{
+            border: 1px solid #ffffff;
+        }
+        .d-block{
+            display: block;
+        }
+        .d-none{
+            display: none;
+        }
+        .contact-details{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app" >
+        <main :class="{darkMode:darkMode}">
+            <div class="theme d-flex" :style="{justifyContent:'flex-end'}" >
+                <button @click="toggleTheme">Toggle Theme</button>
+            </div>
+            <section class="profile d-flex">
+                <div>
+                    <p>{{user.name}}</p>
+                    <p>{{user.age}}</p>
+                    <p>{{user.gender}}</p>
+                </div>
+                <div>
+                    <section :class="{'d-none':!showContact}">
+                        <p>{{user.number}}</p>
+                        <p>{{user.email}}</p>
+                    </section>
+                    <button @click="toggleContactDetails">Toggle Details</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    darkMode:false,
+                    showContact:false,
+                    user: {
+                        name:"Waqar Hussain",
+                        age:24,
+                        gender:"male",
+                        number:03001234567,
+                        email:"email@here.com"
+                    }
+                };
+            },
+            computed:{
+                darkTheme(){
+                    return this.darkMode
+                },
+                showContactDetails(){
+                    return this.showContact
+                }
+            },
+            watch:{
+                darkMode(){
+                    //undo mode here, append html?
+                    alert('Mode updated')
+                }
+            },
+            methods:{
+                toggleTheme(){
+                    this.darkMode = ! this.darkMode
+                },
+                toggleContactDetails(){
+                    this.showContact = ! this.showContact
+                }
+            }
+        })
+        app.mount("#app")
+    </script>
+    
+</body>
+</html>
